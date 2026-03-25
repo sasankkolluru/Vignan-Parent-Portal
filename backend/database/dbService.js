@@ -1,4 +1,5 @@
-const sqlite3 = require('sqlite3').verbose();
+const Database = require("better-sqlite3");
+const db = new Database("database.db");
 const path = require('path');
 const fs = require('fs');
 
