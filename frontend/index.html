@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vignan's University - Parent Portal</title>
+  </head>
+  <body>
+    <!-- Vignan Intro Screen -->
+    <div id="vignan-intro">
+        <div class="intro-content">
+            <svg class="vignan-logo-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                <path class="shield-bg" d="M200,50 L320,50 L320,180 C320,260 200,320 200,320 C200,320 80,260 80,180 L80,50 Z" fill="#b0a0d1" opacity="0.8"/>
+                <path class="shield-border" d="M200,55 L315,55 L315,180 C315,250 200,310 200,310 C200,310 85,250 85,180 L85,55 Z" fill="none" stroke="#6f5aa3" stroke-width="5"/>
+
+                <g class="chakra-group">
+                    <circle cx="200" cy="180" r="85" fill="#3b5998" />
+                    <path d="M200,105 L200,255 M125,180 L275,180 M145,125 L255,235 M145,235 L255,125" stroke="white" stroke-width="12" />
+                    <circle cx="200" cy="180" r="25" fill="#3b5998" stroke="white" stroke-width="3" />
+                    <polygon points="200,165 206,177 218,177 209,186 212,198 200,191 188,198 191,186 182,177 194,177" fill="white" />
+                </g>
+
+                <g class="text-layer">
+                    <text x="50%" y="380" text-anchor="middle" class="main-text">VIGNAN'S</text>
+                    <text x="50%" y="420" text-anchor="middle" class="sub-text">FOUNDATION FOR SCIENCE, TECHNOLOGY & RESEARCH</text>
+                    <text x="50%" y="455" text-anchor="middle" class="sasank-tag">Developed by Sasank</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <style>
+        #vignan-intro {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #ffffff; display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.8s ease-out; font-family: 'Arial', sans-serif;
+        }
+
+        .vignan-logo-svg { width: 350px; height: auto; max-width: 80vw; }
+
+        /* CHAKRA ROTATION: Hardware Accelerated */
+        .chakra-group {
+            transform-origin: 200px 180px;
+            animation: rotateChakra 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            will-change: transform;
+        }
+
+        @keyframes rotateChakra {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* TEXT REVEAL: Scaling from center */
+        .text-layer {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealText 2s ease-out forwards;
+            animation-delay: 1.5s;
+        }
+
+        .main-text { font-size: 65px; font-weight: 900; fill: #e31e24; letter-spacing: -2px; }
+        .sub-text { font-size: 11px; font-weight: bold; fill: #000; }
+        .sasank-tag { font-size: 14px; fill: #3b5998; font-style: italic; font-weight: bold; }
+
+        @keyframes revealText {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* FADE OUT CLASS */
+        .intro-hidden { opacity: 0; pointer-events: none; }
+    </style>
+
+    <script>
+        (function() {
+            const intro = document.getElementById('vignan-intro');
+            
+            // Prevent refresh-loop annoyance
+            if (sessionStorage.getItem('vignan_intro_played')) {
+                intro.style.display = 'none';
+                return;
+            }
+
+            // Play for 6 seconds then disappear
+            setTimeout(() => {
+                intro.classList.add('intro-hidden');
+                sessionStorage.setItem('vignan_intro_played', 'true');
+                // Remove from DOM to keep it scalable and clean
+                setTimeout(() => intro.remove(), 1000);
+            }, 6000);
+        })();
+    </script>
+
+    <!-- Main App -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
